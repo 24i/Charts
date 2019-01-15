@@ -46,9 +46,9 @@ open class XAxisRendererHorizontalBarChart: XAxisRenderer
     
     open override func computeSize()
     {
-        let longest = axis.getLongestLabel() as NSString
+        let longest = axis.getLongestLabel()
         
-        let labelSize = longest.size(withAttributes: [.font: axis.labelFont])
+        let labelSize = (longest.0 as NSString).size(withAttributes: [.font: longest.1])
 
         let labelWidth = floor(labelSize.width + axis.xOffset * 3.5)
         let labelHeight = labelSize.height
@@ -94,8 +94,6 @@ open class XAxisRendererHorizontalBarChart: XAxisRenderer
     {
         guard let transformer = self.transformer else { return }
         
-        let labelFont = axis.labelFont
-        let labelTextColor = axis.labelTextColor
         let labelRotationAngleRadians = axis.labelRotationAngle.DEG2RAD
         
         let centeringEnabled = axis.isCenterAxisLabelsEnabled
@@ -111,8 +109,11 @@ open class XAxisRendererHorizontalBarChart: XAxisRenderer
 
             transformer.pointValueToPixel(&position)
             
+            let labelValue = axis.entries[i]
             if viewPortHandler.isInBoundsY(position.y),
-                let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis)
+                let label = axis.valueFormatter?.stringForValue(labelValue, axis: axis),
+                let labelFont = axis.valueFormatter?.fontForValue(labelValue, axis: axis),
+                let labelTextColor = axis.valueFormatter?.colorForValue(labelValue, axis: axis)
             {
                 drawLabel(context: context,
                           formattedLabel: label,

@@ -116,7 +116,7 @@ open class YAxis: AxisBase
     
     @objc open func requiredSize() -> CGSize
     {
-        let label = getLongestLabel() as NSString
+        let label = getLongestLabel().0 as NSString
         var size = label.size(withAttributes: [.font: labelFont])
         size.width += xOffset * 2.0
         size.height += yOffset * 2.0

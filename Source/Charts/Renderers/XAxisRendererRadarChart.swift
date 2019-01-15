@@ -32,8 +32,6 @@ open class XAxisRendererRadarChart: XAxisRenderer
             axis.isDrawLabelsEnabled
             else { return }
 
-        let labelFont = axis.labelFont
-        let labelTextColor = axis.labelTextColor
         let labelRotationAngleRadians = axis.labelRotationAngle.RAD2DEG
         let drawLabelAnchor = CGPoint(x: 0.5, y: 0.25)
         
@@ -47,6 +45,8 @@ open class XAxisRendererRadarChart: XAxisRenderer
         for i in 0..<(chart.data?.maxEntryCountSet?.entryCount ?? 0)
         {
             let label = axis.valueFormatter?.stringForValue(Double(i), axis: axis) ?? ""
+            let labelFont = axis.valueFormatter?.fontForValue(Double(i), axis: axis) ?? NSUIFont.systemFont(ofSize: 10.0)
+            let labelTextColor = axis.valueFormatter?.colorForValue(Double(i), axis: axis) ?? NSUIColor.black
             let angle = (sliceangle * CGFloat(i) + chart.rotationAngle).truncatingRemainder(dividingBy: 360.0)
             let p = center.moving(distance: CGFloat(chart.yRange) * factor + axis.labelRotatedWidth / 2.0, atAngle: angle)
 

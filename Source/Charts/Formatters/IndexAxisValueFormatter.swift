@@ -56,4 +56,16 @@ open class IndexAxisValueFormatter: NSObject, AxisValueFormatter
         guard values.indices.contains(index), index == Int(value) else { return "" }
         return _values[index]
     }
+    
+    open func fontForValue(_ value: Double,
+                           axis: AxisBase?) -> NSUIFont
+    {
+        return .systemFont(ofSize: 10.0)
+    }
+    
+    open func colorForValue(_ value: Double,
+                            axis: AxisBase?) -> NSUIColor
+    {
+        return .black
+    }
 }

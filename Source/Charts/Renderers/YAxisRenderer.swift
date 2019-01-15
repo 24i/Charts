@@ -133,7 +133,7 @@ open class YAxisRenderer: NSObject, AxisRenderer
         
         for i in from..<to
         {
-            let text = axis.getFormattedLabel(i)
+            let text = axis.getFormattedLabel(i).0
             context.drawText(text,
                              at: CGPoint(x: fixedPosition, y: positions[i].y + offset),
                              align: textAlign,

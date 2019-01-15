@@ -26,5 +26,10 @@ public protocol AxisValueFormatter: class
     ///
     func stringForValue(_ value: Double,
                         axis: AxisBase?) -> String
+
+    func fontForValue(_ value: Double,
+                      axis: AxisBase?) -> NSUIFont
     
+    func colorForValue(_ value: Double,
+                       axis: AxisBase?) -> NSUIColor
 }

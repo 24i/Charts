@@ -97,4 +97,16 @@ open class DefaultAxisValueFormatter: NSObject, AxisValueFormatter
             return formatter?.string(from: NSNumber(floatLiteral: value)) ?? ""
         }
     }
+    
+    open func fontForValue(_ value: Double,
+                           axis: AxisBase?) -> NSUIFont
+    {
+        return .systemFont(ofSize: 10.0)
+    }
+    
+    open func colorForValue(_ value: Double,
+                            axis: AxisBase?) -> NSUIColor
+    {
+        return .black
+    }
 }

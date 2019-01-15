@@ -155,7 +155,7 @@ open class XAxisRenderer: NSObject, AxisRenderer
     {
         let longest = axis.getLongestLabel()
         
-        let labelSize = longest.size(withAttributes: [.font: axis.labelFont])
+        let labelSize = (longest.0 as NSString).size(withAttributes: [.font: longest.1])
 
         let labelWidth = labelSize.width
         let labelHeight = labelSize.height
@@ -249,10 +249,6 @@ open class XAxisRenderer: NSObject, AxisRenderer
         
         let paraStyle = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         paraStyle.alignment = .center
-        
-        let labelAttrs: [NSAttributedString.Key : Any] = [.font: axis.labelFont,
-                                                         .foregroundColor: axis.labelTextColor,
-                                                         .paragraphStyle: paraStyle]
 
         let labelRotationAngleRadians = axis.labelRotationAngle.DEG2RAD
         let isCenteringEnabled = axis.isCenterAxisLabelsEnabled
@@ -276,8 +272,14 @@ open class XAxisRenderer: NSObject, AxisRenderer
 
             guard viewPortHandler.isInBoundsX(position.x) else { continue }
             
-            let label = axis.valueFormatter?.stringForValue(axis.entries[i], axis: axis) ?? ""
+            let labelValue = axis.entries[i]
+            let label = axis.valueFormatter?.stringForValue(labelValue, axis: axis) ?? ""
             let labelns = label as NSString
+            let labelAttrs: [NSAttributedString.Key : Any] = [
+                .font: axis.valueFormatter?.fontForValue(labelValue, axis: axis) ?? NSUIFont.systemFont(ofSize: 10.0),
+                .foregroundColor: axis.valueFormatter?.colorForValue(labelValue, axis: axis) ?? NSUIColor.black,
+                .paragraphStyle: paraStyle
+            ]
             
             if axis.isAvoidFirstLastClippingEnabled
             {

@@ -130,7 +130,7 @@ open class YAxisRendererHorizontalBarChart: YAxisRenderer
         
         for i in from..<to
         {
-            let text = axis.getFormattedLabel(i)
+            let text = axis.getFormattedLabel(i).0
             context.drawText(text,
                              at: CGPoint(x: positions[i].x, y: fixedPosition - offset),
                              align: .center,
